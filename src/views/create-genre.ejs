@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style='padding-top: 6rem;' class="d-flex flex-column justify-content-center align-items-center position-relative">
+    <%- include('navbar') %>
+    <form style='max-width: 430px; width: 100%;' action="" method="" class="card bg-dark text-light shadow-lg p-4">
+
+      <h1 class='card-header text-center'>Create a game genre</h1>
+
+      <div class="input-group mt-3">
+        <label for="genre-name" class="input-group-text">Name</label>
+        <input
+          name="genre_name"
+          id="genre-name"
+          class="form-control"
+          placeholder='MMO RPG...'
+          type="text"
+        />
+      </div>
+      
+      <button id="submit-button" type='submit' class='btn btn-primary shadow-lg mt-4'>Create genre</button>
+      <a href="/" class='btn btn-light mt-3'>Back home</a>
+    </form>
+
+  </body>
+</html>
