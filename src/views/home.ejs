@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
+    <title><%= locals.title %></title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,14 +13,42 @@
   </head>
   <body
     style="padding-top: 6rem"
-    class="d-flex justify-content-center items-start text-light position-relative"
+    class="d-flex pb-5 justify-content-center items-start text-light position-relative"
   >
-    <%- include('navbar') %>
-    <div
-      class="container rounded-3 p-4 bg-secondary d-flex justify-content-center align-items-center shadow-lg"
-    >
-      <% if (games && games.length <= 0) { %>
+    <%- include('./partials/navbar') %>
+    <div class="container rounded-3 p-4 bg-dark shadow-lg">
+      <% if (locals.games && locals.games.length <= 0) { %>
       <h1>No games were added yet</h1>
+      <% } else { %>
+      <h2 class="w-100 text-start mb-5"><%= locals.header %></h2>
+      <div
+        class="row row-cols-auto gap-5 d-flex align-items-center justify-content-center"
+      >
+        <% locals.games.forEach(game => { %>
+        <div
+          style="width: 212px; height: 300px"
+          class="card col p-2 shadow-lg overflow-auto"
+        >
+          <div class="card-body">
+            <h5 class="card-title"><%= game.name %></h5>
+            <p class="card-text"><%= game.developer %></p>
+            <p class="card-text"><%= game.genre_name || 'No genre provided' %></p>
+          </div>
+          <a href="/game/update/<%= game.id %>" class="btn btn-primary"
+            >Update</a
+          >
+          <form action="/game/delete/<%= game.id %>" method="POST">
+            <button
+              type="submit"
+              class="btn btn-danger mt-2 w-100"
+              onclick='return confirm("Are you sure you want to delete this game?")'
+            >
+              Delete
+            </button>
+          </form>
+        </div>
+        <% }); %>
+      </div>
       <% } %>
     </div>
   </body>

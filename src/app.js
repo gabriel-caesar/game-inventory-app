@@ -1,14 +1,16 @@
 const express = require('express');
 const path = require('node:path');
 const homeRouter = require('./routes/home-router');
-const createGameRouter = require('./routes/create-game-router');
-const createGenreRouter = require('./routes/create-genre-router');
+const gameRouter = require('./routes/game-router');
+const genreRouter = require('./routes/genre-router');
 
 const app = express();
 
+// makes possible getting form data through req.body
+app.use(express.urlencoded({ extended: true }));
 app.use('/', homeRouter);
-app.use('/create-game', createGameRouter);
-app.use('/create-genre', createGenreRouter);
+app.use('/game', gameRouter);
+app.use('/genre', genreRouter);
 
 // setting up ejs
 app.set('views', path.join(__dirname, 'views'));
@@ -17,9 +19,6 @@ app.set('view engine', 'ejs');
 // connecting the CSS to the app
 const assetsPath = path.join(__dirname, 'public');
 app.use(express.static(assetsPath));
-
-// makes possible getting form data through req.body
-app.use(express.urlencoded({ extended: true }));
 
 const PORT = 3000;
 app.listen(PORT, error => {

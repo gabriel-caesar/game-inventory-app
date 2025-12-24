@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= locals.title %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body
+    style="padding-top: 6rem"
+    class="d-flex flex-column justify-content-center align-items-center position-relative"
+  >
+    <%- include('./partials/navbar') %> <% if (locals.genre) { %>
+    <form
+      style="max-width: 430px; width: 100%"
+      action="/genre/update/<%= genre.id %>"
+      method="POST"
+      class="card bg-dark text-light shadow-lg p-4"
+    >
+      <h4 class="card-header text-center">Update <%= genre.name %></h4>
+
+      <div class="input-group mt-3">
+        <label for="genre-name" class="input-group-text">Name</label>
+        <input
+          name="genre_name"
+          id="genre-name"
+          class="form-control"
+          placeholder="MMO RPG..."
+          type="text"
+          value='<%= errors.length > 0 ? errors.find(err => err.path === "genre_name").value : genre.name %>'
+        />
+      </div>
+
+      <%- include('./partials/errors') %>
+
+      <button
+        id="submit-button"
+        type="submit"
+        class="btn btn-primary shadow-lg mt-4"
+      >
+        Update genre
+      </button>
+      <a href="/genre/view" class="btn btn-light mt-3">Back to genres</a>
+    </form>
+    <% } else { %>
+    <div class="d-flex flex-column">
+      <h1 class="text-dark">Couldn't load genre</h1>
+      <a href="/genre/view" class="btn btn-dark mt-3 mx-auto">Back to genres</a>
+    </div>
+    <% } %>
+  </body>
+</html>

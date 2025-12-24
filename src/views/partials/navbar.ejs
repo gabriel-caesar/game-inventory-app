@@ -1,0 +1,45 @@
+<nav
+  style="background-color: #242424; box-shadow: 0 5px 8px 1px"
+  class="navbar navbar-expand position-fixed top-0 w-100 px-5 z-2"
+>
+  <div class="container-fluid d-flex align-items-center justify-content-around">
+    <a href="/" class="navbar-brand text-light">Home</a>
+    <ul
+      class="navbar-nav d-flex justify-content-center align-items-center w-50"
+    >
+      <li class="nav-item">
+        <a href="/game/create" class="btn btn-primary">Create game</a>
+      </li>
+      <li class="nav-item">
+        <a href="/genre/create" class="mx-4 btn btn-primary"
+          >Create game genre</a
+        >
+      </li>
+      <li class="nav-item">
+        <a href="/genre/view" class="btn btn-primary">View genres</a>
+      </li>
+    </ul>
+    <% if (locals.title === 'Home page') { %>
+    <form
+      action="/show"
+      role="search"
+      class="d-flex align-items-center justify-content-around"
+    >
+      <div class="input-group">
+        <label for="genre" class="input-group-text">Filter by</label>
+        <select class="form-select form-select-sm" name="genre" id="genre">
+          <option value="All" selected><%= locals.filter || 'All' %></option>
+          <% locals.genres.forEach((genre, index) => { %>
+          <option
+            value="<%= locals.filter === genre.name ? 'All' : genre.name %>"
+          >
+            <%= locals.filter === genre.name ? 'All' : genre.name %>
+          </option>
+          <% }) %>
+        </select>
+        <button type="submit" class="btn btn-primary">Apply</button>
+      </div>
+    </form>
+    <% } %>
+  </div>
+</nav>

@@ -15,16 +15,16 @@
     style="padding-top: 6rem"
     class="pb-5 d-flex flex-column justify-content-center align-items-center position-relative"
   >
-    <%- include('./partials/navbar') %>
+    <%- include('./partials/navbar') %> <% if (locals.game) { %>
     <form
       style="max-width: 430px; width: 100%"
-      action="/game/create"
+      action="/game/update/<%= locals.game.id %>"
       method="POST"
       class="card bg-dark shadow-lg p-4"
     >
-      <% if (locals.genres.length > 0) { %>
-
-      <h1 class="card-header text-light text-center">Create your game</h1>
+      <h1 class="card-header text-light text-center">
+        Update <%= locals.game.name %>
+      </h1>
 
       <div class="input-group mt-3">
         <label for="game-name" class="input-group-text">Name</label>
@@ -34,7 +34,7 @@
           class="form-control"
           placeholder="World of Warcraft..."
           type="text"
-          value="<%= locals.matchedData.game_name ? locals.matchedData.game_name : '' %>"
+          value='<%= errors.find(err => err.path === "game_name") ? errors.find(err => err.path === "game_name").value : locals.game.name %>'
         />
       </div>
       <div class="input-group mt-3">
@@ -45,16 +45,21 @@
           class="form-control"
           placeholder="Blizzard..."
           type="text"
-          value="<%= locals.matchedData.developer ? locals.matchedData.developer : '' %>"
+          value='<%= errors.find(err => err.path === "developer") ? errors.find(err => err.path === "developer").value : locals.game.developer %>'
         />
       </div>
 
       <div class="input-group mt-3">
         <label for="genre" class="input-group-text">Genre</label>
         <select class="form-select form-select-sm" name="genre_id" id="genre">
-          <option value="null" selected>Select a genre</option>
+          <option
+            value="<%= locals.genres.find(g => g.id === locals.game.genre_id) ? locals.genres.find(g => g.id === locals.game.genre_id).id : 'null' %>"
+            selected
+          >
+            <%= locals.genres.find(g => g.id === locals.game.genre_id) ? locals.genres.find(g => g.id === locals.game.genre_id).name : 'No genre provided' %>
+          </option>
           <% locals.genres.forEach(genre => { %>
-          <option value="<%= genre.id %>"><%= genre.name %></option>
+          <option value="<%= genre.id === game.genre_id ? 'null' : genre.id %>"><%= genre.id === game.genre_id ? 'Select a genre' : genre.name %></option>
           <% }) %>
         </select>
       </div>
@@ -66,14 +71,13 @@
         type="submit"
         class="btn btn-primary shadow-lg mt-4"
       >
-        Create
+        Update
       </button>
-      <% } else { %>
-      <h1 class="card-header text-light text-center">
-        Create genres to add games
-      </h1>
-      <% } %>
       <a href="/" class="btn btn-light mt-3">Back home</a>
     </form>
+    <% } else { %>
+    <h1 class="card-header text-light text-center">No game was loaded</h1>
+    <a href="/" class="btn btn-light mt-3">Back home</a>
+    <% } %>
   </body>
 </html>
